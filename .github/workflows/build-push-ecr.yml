@@ -3,7 +3,7 @@ name: 🐳 Build and Push Docker Image
 on:
   push:
     paths:
-      - 'terraform/app/**'
+      - 'app/**'
   workflow_dispatch:
 
 jobs:
