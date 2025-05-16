@@ -27,7 +27,7 @@ jobs:
           aws eks update-kubeconfig --name my-eks-cluster --region ${{ secrets.AWS_REGION }}
 
           ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
-          REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-ecr-repo
+          REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/
           IMAGE_TAG=latest
 
           sed "s|<IMAGE_URI>|$REPOSITORY_URI:$IMAGE_TAG|g" k8s/deployment.yaml | kubectl apply -f -
