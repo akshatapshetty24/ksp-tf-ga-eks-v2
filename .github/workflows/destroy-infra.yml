@@ -22,5 +22,5 @@ jobs:
 
       - run: |
           cd terraform/infra
-          terraform init
+          terraform init -backend-config="dynamodb_table=ksp-tf-ga-eks-v2-terraform-locks" -backend-config="bucket=ksp-tf-ga-eks-v2-terraform-state-bucket"
           terraform destroy -auto-approve
