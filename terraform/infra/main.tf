@@ -153,7 +153,7 @@ resource "aws_eks_node_group" "example_nodes" {
 
 # ECR
 resource "aws_ecr_repository" "app_repo" {
-  name                 = "var.ecr-name"
+  name                 = "${var.ecr-name}"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
@@ -161,7 +161,7 @@ resource "aws_ecr_repository" "app_repo" {
   }
 
   tags = {
-    Name = "var.ecr-name"
+    Name = "${var.ecr-name}"
   }
 }
 
