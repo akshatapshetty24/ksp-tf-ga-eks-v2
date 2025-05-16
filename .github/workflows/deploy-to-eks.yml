@@ -1,0 +1,31 @@
+name: 🚀 Deploy App to EKS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-to-eks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - uses: azure/setup-kubectl@v4
+        with:
+          version: 'latest'
+
+      - run: |
+          aws eks update-kubeconfig --name my-eks-cluster --region ${{ secrets.AWS_REGION }}
+
+          ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+          REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-ecr-repo
+          IMAGE_TAG=latest
+
+          sed "s|<IMAGE_URI>|$REPOSITORY_URI:$IMAGE_TAG|g" k8s/deployment.yaml | kubectl apply -f -
+          kubectl apply -f k8s/service.yaml
