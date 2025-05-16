@@ -1,18 +1,17 @@
-# Use official Node.js LTS image
+# Use official Node.js image as base
 FROM node:18-alpine
 
 # Set working directory
 WORKDIR /usr/src/app
 
-# Copy package files and install dependencies
-COPY package*.json ./
-RUN npm install --production
+# Copy application files
+COPY app.js .
 
-# Copy application source code
-COPY . .
+# Install dependencies (none in your case, but added placeholder if you extend later)
+# RUN npm install
 
-# Expose port (change to your app's port if needed)
+# Expose the port the app runs on
 EXPOSE 3000
 
 # Run the app
-CMD ["node", "server.js"]
+CMD ["node", "app.js"]
