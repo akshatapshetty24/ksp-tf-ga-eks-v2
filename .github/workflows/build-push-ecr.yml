@@ -25,6 +25,6 @@ jobs:
           IMAGE_TAG=latest
 
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $REPOSITORY_URI
-          cd app 
-          docker build -t $REPOSITORY_URI:$IMAGE_TAG .
+          
+          docker build -t $REPOSITORY_URI:$IMAGE_TAG terraform/app/
           docker push $REPOSITORY_URI:$IMAGE_TAG
