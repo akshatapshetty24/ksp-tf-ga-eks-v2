@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /usr/src/app
 
 # Copy application files
-COPY app.js .
+COPY server.js .
 
 # Install dependencies (none in your case, but added placeholder if you extend later)
 # RUN npm install
@@ -14,4 +14,4 @@ COPY app.js .
 EXPOSE 3000
 
 # Run the app
-CMD ["node", "app.js"]
+CMD ["node", "server.js"]
