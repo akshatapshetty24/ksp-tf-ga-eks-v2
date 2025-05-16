@@ -1,0 +1,30 @@
+name: 🐳 Build and Push Docker Image
+
+on:
+  push:
+    paths:
+      - 'app/**'
+  workflow_dispatch:
+
+jobs:
+  docker-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - run: |
+          ACCOUNT_ID=$(aws sts get-caller-identity --query "Account" --output text)
+          REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-ecr-repo
+          IMAGE_TAG=latest
+
+          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $REPOSITORY_URI
+
+          docker build -t $REPOSITORY_URI:$IMAGE_TAG ./app
+          docker push $REPOSITORY_URI:$IMAGE_TAG
