@@ -26,5 +26,5 @@ jobs:
 
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin $REPOSITORY_URI
           
-          docker build -t $REPOSITORY_URI:$IMAGE_TAG terraform/app/
+          docker build -t $REPOSITORY_URI:$IMAGE_TAG terraform/app/Dockerfile terraform/app/
           docker push $REPOSITORY_URI:$IMAGE_TAG
