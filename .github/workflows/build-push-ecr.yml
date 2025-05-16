@@ -33,7 +33,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-ecr-repo
+          REPOSITORY_URI=$ACCOUNT_ID.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/ksp-ecr-app-repository
           IMAGE_TAG=latest
 
           # Build Docker image from terraform/app/ directory
