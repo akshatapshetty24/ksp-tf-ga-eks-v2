@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "ksp-tf-ga-eks-v2-terraform-state-bucket"
+    bucket         = "ksp-tf-ga-eks-v2-terraform-state-bucket2"
     key            = "eks/terraform.tfstate"
     region         = "us-east-1"
     #region = var.aws_region
